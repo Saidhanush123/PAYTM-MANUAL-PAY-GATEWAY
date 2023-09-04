@@ -15,7 +15,7 @@ $responseParamList = array();
 
 $requestParamList = array();
 
-$requestParamList = array("MID" => "lrljVN14090197822476" , "ORDERID" => $txn_id); 
+$requestParamList = array("MID" => "lrl090197822476" , "ORDERID" => $txn_id); 
 
 $responseParamList = getTxnStatusNew($requestParamList);
 
