@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paytm Qr Payment</title>
+</head>
+<body>
+    <form id="addFund">
+        Transaction Id : <input type="text" name="txn-id" id="txn-id">
+        Amount : <input type="number" name="txn-amount" id="txn-amount">
+        <input type="submit" id="fetch-button" value="Save">
+    </form>
+    <table width="100%" cellpadding="10px" >
+        <tr>
+            <th>TXNID</th>
+            <th>BANKTXNID</th>
+            <th>ORDERID</th>
+            <th>TXNAMOUNT</th>
+            <th>STATUS</th>
+            <th>TXNTYPE</th>
+            <th>GATEWAYNAME</th>
+            <th>RESPCODE</th>
+            <th>RESPMSG</th>
+            <th>PAYMENTMODE</th>
+            <th>REFUNDAMT</th>
+            <th>TXNDATE</th>
+        </tr>
+            <tbody id="response">
+            </tbody>
+        </table>
+    <div class="output"></div>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+
+    function jsonData(targetForm){
+            var arr = $(targetForm).serializeArray();
+            var obj = {};
+            for(var a = 0; a< arr.length; a++){
+                if(arr[a].value == ""){
+                return false;
+                }
+                obj[arr[a].name] = arr[a].value;
+            }
+            var json_string = JSON.stringify(obj);
+
+            return json_string;
+        }
+
+    $("#fetch-button").on("click", function(e){
+        e.preventDefault();
+        var jsonObj = jsonData("#addFund");
+        $.ajax({
+            url : 'http://localhost:8080/pay/addfundApi.php',
+            type : "POST",
+            data: jsonObj,
+            success : function(data){
+                $("#response").append("<tr>"
+                                            +"<td>"+ data.TXNID +"</td>"+
+                                            "<td>"+ data.BANKTXNID +"</td>"+
+                                            "<td>"+ data.ORDERID +"</td>"+
+                                            "<td>"+ data.TXNAMOUNT +"</td>"+
+                                            "<td>"+ data.STATUS +"</td>"+
+                                            "<td>"+ data.TXNTYPE +"</td>"+
+                                            "<td>"+ data.GATEWAYNAME +"</td>"+
+                                            "<td>"+ data.RESPCODE +"</td>"+
+                                            "<td>"+ data.RESPMSG +"</td>"+
+                                            "<td>"+ data.PAYMENTMODE +"</td>"+
+                                            "<td>"+ data.REFUNDAMT +"</td>"+
+                                            "<td>"+ data.TXNDATE +"</td>"+
+                                    "</tr>")
+            }
+                // if (data.status == false) {
+                //     $("#response").append("<tr><td colspan='6'><h2>"+data.message+"</h2></td></tr>");
+                // } else {
+                //     $.each(data, function(key, value){
+                //         
+                //         });
+                // }
+            
+        });
+    });
+});
+</script>
+</body>
+</html>
