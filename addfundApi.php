@@ -13,8 +13,10 @@ include "encdec_paytm.php";
 
 $responseParamList = array();
 
+
 $requestParamList = array();
 
+//change this Mid Id 
 $requestParamList = array("MID" => "lrl090197822476" , "ORDERID" => $txn_id); 
 
 $responseParamList = getTxnStatusNew($requestParamList);
